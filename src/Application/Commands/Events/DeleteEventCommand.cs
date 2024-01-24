@@ -9,5 +9,6 @@ namespace Application.Commands.Events
     public class DeleteEventCommand : IRequest<Guid> 
     {
         public Guid Id { get; set; }
+        public Guid CreatorId { get; set; }
     }
 }
