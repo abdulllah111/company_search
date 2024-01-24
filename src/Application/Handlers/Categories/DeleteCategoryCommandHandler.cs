@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Categories
 {
-    public class UpdateCategoryCommandHundler
+    public class DeleteCategoryCommandHandler
     {
         
     }

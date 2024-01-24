@@ -11,6 +11,7 @@ namespace Application.Commands.Events
     public class UpdateEventCommand : IRequest<Guid>
     {
         public Guid Id { get; set; }
+        public Guid CreatorId { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
         public DateTime StartDate { get; set; }

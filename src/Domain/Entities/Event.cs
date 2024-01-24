@@ -26,7 +26,9 @@ namespace Domain.Entities
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }
         
-        public required ICollection<EventCategory> EventCategories { get; set; }
+
+        public required ICollection<Guid> CategoryIds { get; set; }
+        public ICollection<EventCategory>? EventCategories { get; set; }
         public ICollection<EventMember>? Members { get; set; }
 
         public Guid? ParentEventId { get; set; }
