@@ -1,4 +1,5 @@
 using Domain.Common;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -7,9 +8,10 @@ namespace Domain.Entities
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string Email { get; set; }   
-
+        public int Age { get; set; }
+        public required Gender Gender { get; set; }
         public ICollection<Event>? CreatedEvents { get; set; }
-
+        
         public ICollection<EventMember>? EventMemberships { get; set; }
     }
 }

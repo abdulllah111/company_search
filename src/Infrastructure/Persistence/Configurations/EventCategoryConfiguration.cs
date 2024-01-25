@@ -4,14 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class EventCategoryConfiguration : IEntityTypeConfiguration<EventCategory>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<EventCategory> builder)
         {
             builder.HasKey(e => e.Id);
-            
-            builder.Property(e => e.Name)
-            .IsRequired();
         }
     }
 }

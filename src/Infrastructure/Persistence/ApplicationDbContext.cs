@@ -10,6 +10,8 @@ namespace Persistence
         public DbSet<Event> Events {get; set;}
         public DbSet<User> Users{get; set;}
         public DbSet<Category> Categories {get; set;}
+        public DbSet<EventCategory> EventCategories {get; set;}
+        public DbSet<EventMember> EventMembers {get; set;}
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -20,7 +22,8 @@ namespace Persistence
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-
+            modelBuilder.ApplyConfiguration(new EventCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new EventMemberConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

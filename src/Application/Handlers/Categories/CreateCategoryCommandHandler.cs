@@ -20,7 +20,6 @@ namespace Application.Handlers.Categories
             // Проверка на дублирование по имени
             if (_context.Categories.Any(c => c.Name == request.Name))
             {
-                // Здесь можно выбросить исключение или вернуть какой-то код ошибки
                 throw new InvalidOperationException("Категория с таким именем уже существует.");
             }
 
@@ -31,13 +30,8 @@ namespace Application.Handlers.Categories
                 CreatorId = request.CreatorId,
                 Created = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
+                ParentCategoryId = request.ParentCategoryId
             };
-
-            if (request.ParentCategoryId.HasValue)
-            {
-                var parentCategory = await _context.Categories.FindAsync(request.ParentCategoryId.Value, cancellationToken);
-                entity.ParentCategory = parentCategory;
-            }
 
             await _context.Categories.AddAsync(entity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
