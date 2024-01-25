@@ -29,6 +29,8 @@ namespace Domain.Entities
 
         public required ICollection<Guid> CategoryIds { get; set; }
         public ICollection<EventCategory>? EventCategories { get; set; }
+
+        public ICollection<Guid>? MemberIds { get; set; }
         public ICollection<EventMember>? Members { get; set; }
 
         public Guid? ParentEventId { get; set; }
