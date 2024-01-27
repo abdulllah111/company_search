@@ -12,10 +12,8 @@ namespace Application.Handlers.Events
     {
         private readonly IApplicationDbContext _context;
         private readonly ICategoryService _categoryService;
-        public UpdateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService){
-            _context = context;
-            _categoryService = categoryService;
-        }
+        public UpdateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService) =>
+        (_context, _categoryService) = (context, categoryService);
         public async Task<Guid> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Events

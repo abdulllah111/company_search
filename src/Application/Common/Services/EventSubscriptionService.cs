@@ -45,17 +45,19 @@ namespace Application.Common.Services
                 throw new NotFoundException("Max participants");
             }
 
-            //
+            // Недопустимый возраст - ошибка
             if(eventEntity.MinAge > memberEntity!.Age && eventEntity.MaxAge < memberEntity.Age)
             {
                 throw new NotFoundException("Inappropriate age");
             }
 
+            // Недопустимый пол - ошибка
             if(eventEntity.ParticipantsGender != Gender.Any && eventEntity.ParticipantsGender != memberEntity.Gender)
             {
                 throw new NotFoundException("Inappropriate gender");
             }
 
+            // Подиска от создателя - ошибка
             if(eventEntity.CreatorId == memberEntity.Id)
             {
                 throw new NotFoundException("You are the event creator");

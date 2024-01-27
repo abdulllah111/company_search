@@ -11,15 +11,13 @@ namespace Application.Handlers.Events
         private readonly IApplicationDbContext _context;
 
         private readonly ICategoryService _categoryService;
-        public CreateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService){
-            _context = context;
-            _categoryService = categoryService;
-        }
+        public CreateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService) =>
+        (_context, _categoryService) = (context, categoryService);
         public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var entity = new Event
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = request.Name, 
                 Description = request.Description, 
                 StartDate = request.StartDate,

@@ -25,7 +25,7 @@ namespace Application.Handlers.Categories
 
             var entity = new Category
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = request.Name,
                 CreatorId = request.CreatorId,
                 Created = DateTime.UtcNow,

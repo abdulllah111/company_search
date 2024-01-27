@@ -11,7 +11,6 @@ namespace Domain.Entities
         public int Age { get; set; }
         public required Gender Gender { get; set; }
         public ICollection<Event>? CreatedEvents { get; set; }
-        
         public ICollection<EventMember>? EventMemberships { get; set; }
     }
 }

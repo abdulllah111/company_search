@@ -11,11 +11,8 @@ namespace Application.Handlers.Events
         private readonly IApplicationDbContext _context;
         private readonly ICategoryService _categoryService;
 
-        public DeleteEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService)
-        {
-            _context = context;
-            _categoryService = categoryService;
-        }
+        public DeleteEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService) =>
+        (_context, _categoryService) = (context, categoryService);
 
         public async Task<Guid> Handle(DeleteEventCommand request, CancellationToken cancellationToken)
         {
