@@ -27,10 +27,5 @@ namespace Application.Commands.Events
         public Gender ParticipantsGender { get; set; }
         public IList<EventCategory>? EventCategories { get; set; }
         public Guid? ParentEventId { get; set; }
-
-        public UpdateEventCommand(){
-            EventType = EventType.User;
-            ParticipantsGender = Gender.Any;
-        }
     }
 }

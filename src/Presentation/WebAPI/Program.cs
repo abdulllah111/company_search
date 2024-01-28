@@ -4,14 +4,11 @@ using Application.Common.Interfaces;
 using Persistence;
 // using WebAPI.Middleware;
 using Application.Common.Mappings;
+using WebAPI.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddAutoMapper(config =>
-//     {
-//         config.AddProfile(new MappingProfile(Assembly.GetExecutingAssembly()));
-//         config.AddProfile(new MappingProfile(typeof(IApplicationDbContext).Assembly));
-//     });
 RegisterServices(builder.Services);
 
 using (var scope = builder.Services?.BuildServiceProvider().CreateScope())
@@ -54,6 +51,17 @@ void RegisterServices(IServiceCollection services)
             policy.AllowAnyOrigin();
         });
     });
+
+    services.AddAuthentication(config => {
+        config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options => {
+        options.Authority = "https://localhost:44352/";
+        options.Audience = "CompanySearchWebAPI";
+        options.RequireHttpsMetadata = false;
+    })
+    ;
 }
 
 void Configure(WebApplication app)
@@ -64,8 +72,10 @@ void Configure(WebApplication app)
         app.UseDeveloperExceptionPage();
     }
 
+
     // exceptHundler -> hsts -> httpsredirection -> files -> cookie -> routin -> cors -> authentication - authorization -> sess -> mvc
 
+    app.UseCustomExceptionHandler();
     app.UseHttpsRedirection();
     app.UseRouting();
     app.UseCors("AllowAll");

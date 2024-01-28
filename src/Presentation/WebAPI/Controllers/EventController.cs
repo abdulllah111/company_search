@@ -6,6 +6,7 @@ using Application.Commands.Events;
 using Application.Queries.Events.GetEvent;
 using Application.Queries.Events.GetEvents;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 
@@ -19,6 +20,7 @@ namespace WebAPI.Controllers
         public EventController(IMapper mapper) => _mapper = mapper;
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<EventsVm>> GetAll(){
             var query = new GetEventsQuery(){
                 UserId = UserId
@@ -29,6 +31,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<EventDetailsVm>> Get(Guid id){
             var query = new GetEventDetailsQuery{
                 Id = id,
@@ -40,6 +43,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CreateEventCommand>> Post([FromBody] CreateEventDto createEventDto){
             var command = _mapper.Map<CreateEventCommand>(createEventDto);
             command.CreatorId = UserId;
@@ -49,6 +53,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> Put([FromBody] UpdateEventDto updateEventDto){
             var command = _mapper.Map<UpdateEventCommand>(updateEventDto);
             command.CreatorId = UserId;
@@ -57,6 +62,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id){
             var command = new DeleteEventCommand{
                 Id = id,

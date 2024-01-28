@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Commands.Events;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 
@@ -18,6 +19,7 @@ namespace WebAPI.Controllers
         public EventSubscriptionController(IMapper mapper) => _mapper = mapper;
 
         [HttpPost("subscribe")]
+        [Authorize]
         public async Task<IActionResult> SubscribeToEvent([FromBody] EventSubscriptionDto subscritionDto)
         {
             var command = _mapper.Map<SubscribeToEventCommand>(subscritionDto);
@@ -28,6 +30,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("unsubscribe")]
+        [Authorize]
         public async Task<IActionResult> UnsubscribeFromEvent([FromBody] EventSubscriptionDto subscritionDto)
         {
             var command = _mapper.Map<UnsubscribeFromEventCommand>(subscritionDto);

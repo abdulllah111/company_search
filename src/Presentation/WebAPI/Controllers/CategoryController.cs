@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Commands.Categories;
 using Application.Queries.Categories.GetCategories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 
@@ -18,6 +19,7 @@ namespace WebAPI.Controllers
         public CategoryController(IMapper mapper) => _mapper = mapper;
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<CategoriesVm>> GetAll()
         {
             var query = new GetCategoriesQuery()
@@ -30,6 +32,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CreateCategoryCommand>> Post([FromBody] CreateCategoryDto createCategoryDto)
         {
             var command = _mapper.Map<CreateCategoryCommand>(createCategoryDto);
@@ -40,6 +43,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteCategoryCommand
