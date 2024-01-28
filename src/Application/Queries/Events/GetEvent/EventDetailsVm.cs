@@ -33,7 +33,7 @@ namespace Application.Queries.Events.GetEvent
         {
             profile.CreateMap<Event, EventDetailsVm>()
             .ForMember(eventVm => eventVm.MembersCount,
-            opt => opt.MapFrom(eventEntity => eventEntity.MemberIds!.Count));
+            opt => opt.MapFrom(eventEntity => eventEntity.Members!.Count));
         }
     }
 }

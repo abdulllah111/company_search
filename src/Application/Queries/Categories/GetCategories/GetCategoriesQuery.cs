@@ -8,6 +8,6 @@ namespace Application.Queries.Categories.GetCategories
 {
     public class GetCategoriesQuery : IRequest<CategoriesVm>
     {
-        
+        public Guid UserId { get; set; }
     }
 }

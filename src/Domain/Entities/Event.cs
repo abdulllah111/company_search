@@ -26,15 +26,11 @@ namespace Domain.Entities
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }
         
-
-        public required ICollection<Guid> CategoryIds { get; set; }
-        public ICollection<EventCategory>? EventCategories { get; set; }
-
-        public ICollection<Guid>? MemberIds { get; set; }
-        public ICollection<EventMember>? Members { get; set; }
+        public IList<EventCategory>? EventCategories { get; set; }
+        public IList<EventMember>? Members { get; set; }
 
         public Guid? ParentEventId { get; set; }
         public Event? ParentEvent { get; set; }
-        public ICollection<Event>? ChildEvents { get; set; }
+        public IList<Event>? ChildEvents { get; set; }
     }
 }

@@ -31,16 +31,16 @@ namespace Application.Handlers.Events
                 RegistrationDeadline = request.RegistrationDeadline,
                 ParticipantsGender = request.ParticipantsGender,
                 CreatorId = request.CreatorId,
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
-                CategoryIds = request.CategoryIds,
+                EventCategories = request.EventCategories,
                 ParentEventId = request.ParentEventId
             };
 
             // Устанавливаем необходимый флаг для добавленных категорий
-            foreach (var categoryId in request.CategoryIds)
+            foreach (var category in request.EventCategories!)
             {
-                await _categoryService.UpdateCategoryUsageStatusAsync(categoryId, cancellationToken);
+                await _categoryService.UpdateCategoryUsageStatusAsync(category.CategoryId, cancellationToken);
             }
 
             await _context.Events.AddAsync(entity, cancellationToken);

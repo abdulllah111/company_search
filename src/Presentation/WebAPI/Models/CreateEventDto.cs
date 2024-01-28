@@ -1,13 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Application.Commands.Events;
+using Application.Common.Mappings;
 using Domain.Common;
-using Domain.Entities;
 using Domain.Enums;
-using MediatR;
 
-namespace Application.Commands.Events
+namespace WebAPI.Models
 {
-    public class CreateEventCommand : IRequest<Guid>
+    public class CreateEventDto : IMapFrom<CreateEventCommand>
     {
-        public Guid CreatorId { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
         public DateTime StartDate { get; set; }
@@ -20,12 +23,6 @@ namespace Application.Commands.Events
         public int MaxAge { get; set; }
         public DateTime RegistrationDeadline { get; set; }
         public Gender ParticipantsGender { get; set; }
-        public IList<EventCategory>? EventCategories { get; set; }
-        public Guid? ParentEventId { get; set; }
-
-        public CreateEventCommand(){
-            EventType = EventType.User;
-            ParticipantsGender = Gender.Any;
-        }
+        public required IList<Guid> CategoryIds { get; set; }
     }
 }

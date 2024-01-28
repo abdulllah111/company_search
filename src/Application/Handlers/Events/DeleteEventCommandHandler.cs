@@ -22,14 +22,14 @@ namespace Application.Handlers.Events
             if(entity == null || entity.CreatorId != request.CreatorId) throw new NotFoundException(nameof(Event), request.Id);
 
             // Получаем копию CategoryIds до удаления события
-            var categoryIdsToRemove = entity.CategoryIds.ToList();
+            var categoriesToRemove = entity.EventCategories!.ToList();
 
             _context.Events.Remove(entity);
             
             // Обновляем флаг категорий
-            foreach (var categoryId in categoryIdsToRemove)
+            foreach (var category in categoriesToRemove)
             {
-                await _categoryService.UpdateCategoryUsageStatusAsync(categoryId, cancellationToken);
+                await _categoryService.UpdateCategoryUsageStatusAsync(category.CategoryId, cancellationToken);
             }
 
             await _context.SaveChangesAsync(cancellationToken);

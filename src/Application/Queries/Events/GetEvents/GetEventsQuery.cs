@@ -8,6 +8,6 @@ namespace Application.Queries.Events.GetEvents
 {
     public class GetEventsQuery : IRequest<EventsVm>
     {
-        
+        public Guid UserId { get; set; }
     }
 }

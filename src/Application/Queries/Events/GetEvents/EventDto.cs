@@ -11,7 +11,7 @@ namespace Application.Queries.Events.GetEvents
     public class EventDto : IMapFrom<Event>
     {
         public Guid Id { get; set; }
-        public int Name { get; set; }
+        public required string Name { get; set; }
         public int MinParticipants { get; set; }
         public int MaxParticipants { get; set; }
         public DateTime StartDate { get; set; }
@@ -23,7 +23,7 @@ namespace Application.Queries.Events.GetEvents
         {
             profile.CreateMap<Event, EventDto>()
             .ForMember(eventDto => eventDto.MembersCount,
-            opt => opt.MapFrom(eventEntity => eventEntity.MemberIds!.Count));
+            opt => opt.MapFrom(eventEntity => eventEntity.Members!.Count));
         }
     }
 }

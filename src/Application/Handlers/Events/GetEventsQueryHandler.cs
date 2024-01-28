@@ -23,9 +23,9 @@ namespace Application.Handlers.Events
         {
             var events = await _context.Events
                 .Where(eventEntity => 
-                eventEntity.EndDate >= DateTime.Now && 
-                eventEntity.MaxParticipants >= eventEntity.MemberIds!.Count && 
-                eventEntity.RegistrationDeadline >= DateTime.Now)
+                eventEntity.EndDate >= DateTime.UtcNow && 
+                eventEntity.MaxParticipants >= eventEntity.Members!.Count && 
+                eventEntity.RegistrationDeadline >= DateTime.UtcNow)
                 .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken) ;
 
