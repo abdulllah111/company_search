@@ -60,8 +60,13 @@ void RegisterServices(IServiceCollection services)
         options.Authority = "https://localhost:44352/";
         options.Audience = "CompanySearchWebAPI";
         options.RequireHttpsMetadata = false;
-    })
-    ;
+    });
+
+    services.AddSwaggerGen(config =>{
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        config.IncludeXmlComments(xmlPath);
+    });
 }
 
 void Configure(WebApplication app)
@@ -74,7 +79,11 @@ void Configure(WebApplication app)
 
 
     // exceptHundler -> hsts -> httpsredirection -> files -> cookie -> routin -> cors -> authentication - authorization -> sess -> mvc
-
+    app.UseSwagger();
+    app.UseSwaggerUI(config =>{
+        config.RoutePrefix = string.Empty;
+        config.SwaggerEndpoint("swagger/v1/swagger.json", "ConpanySearch Web API");
+    });
     app.UseCustomExceptionHandler();
     app.UseHttpsRedirection();
     app.UseRouting();

@@ -40,7 +40,7 @@ namespace Application.Handlers.Events
             // Устанавливаем необходимый флаг для добавленных категорий
             foreach (var category in request.EventCategories!)
             {
-                await _categoryService.UpdateCategoryUsageStatusAsync(category.CategoryId, cancellationToken);
+                await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
             }
 
             await _context.Events.AddAsync(entity, cancellationToken);

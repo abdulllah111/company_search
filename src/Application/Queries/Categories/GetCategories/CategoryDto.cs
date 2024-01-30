@@ -11,6 +11,7 @@ namespace Application.Queries.Categories.GetCategories
     {
         public Guid? CreatorId { get; set; }
         public required string Name { get; set; }
+        public Category? ParentCategory { get; set; }
         public IList<Category>? ChildCategories { get; set; }
         public bool IsShared { get; set; } 
     }

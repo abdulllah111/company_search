@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Commands.Events;
 using Application.Common.Mappings;
 using Domain.Common;
+using Domain.Entities;
 using Domain.Enums;
 
 namespace WebAPI.Models
@@ -24,7 +25,7 @@ namespace WebAPI.Models
         public int MaxAge { get; set; }
         public DateTime RegistrationDeadline { get; set; }
         public Gender ParticipantsGender { get; set; }
-        public required IList<Guid> CategoryIds { get; set; }
+        public IList<Category>? EventCategories { get; set; }
         public Guid? ParentEventId { get; set; }
         
     }

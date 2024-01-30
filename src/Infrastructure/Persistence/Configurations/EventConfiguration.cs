@@ -11,14 +11,7 @@ namespace Persistence.Configurations
             builder.HasKey(e => e.Id);
 
             builder.OwnsOne(e => e.Location);
-
-            builder.HasMany(e => e.EventCategories)
-            .WithOne(ec => ec.Event)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(e => e.Members)
-            .WithOne(em => em.Event)
-            .OnDelete(DeleteBehavior.Cascade);
+            // builder.OwnsOne(e => e.Members);
 
             builder.HasMany(e => e.ChildEvents)
             .WithOne()

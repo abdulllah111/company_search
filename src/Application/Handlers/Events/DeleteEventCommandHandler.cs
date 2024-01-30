@@ -29,7 +29,7 @@ namespace Application.Handlers.Events
             // Обновляем флаг категорий
             foreach (var category in categoriesToRemove)
             {
-                await _categoryService.UpdateCategoryUsageStatusAsync(category.CategoryId, cancellationToken);
+                await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
             }
 
             await _context.SaveChangesAsync(cancellationToken);

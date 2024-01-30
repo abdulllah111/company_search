@@ -16,7 +16,7 @@ namespace Application.Queries.Events.GetEvents
         public int MaxParticipants { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime RegistrationDeadline { get; set; }
-        public IList<EventCategory>? EventCategories { get; set; }
+        public IList<Category>? EventCategories { get; set; }
         public int MembersCount { get; set; }
         
         public void Mapping(Profile profile)

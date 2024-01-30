@@ -24,6 +24,8 @@ namespace WebAPI.Controllers
         {
             var command = _mapper.Map<SubscribeToEventCommand>(subscritionDto);
             command.UserId = UserId;
+            command.UserAge = Age;
+            command.UserGender = Gender;
             
             var eventId = await Mediator!.Send(command);
             return Ok(eventId);

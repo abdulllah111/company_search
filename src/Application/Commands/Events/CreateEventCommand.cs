@@ -20,7 +20,7 @@ namespace Application.Commands.Events
         public int MaxAge { get; set; }
         public DateTime RegistrationDeadline { get; set; }
         public Gender ParticipantsGender { get; set; }
-        public IList<EventCategory>? EventCategories { get; set; }
+        public IList<Category>? EventCategories { get; set; }
         public Guid? ParentEventId { get; set; }
 
         public CreateEventCommand(){

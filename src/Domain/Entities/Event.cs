@@ -24,9 +24,8 @@ namespace Domain.Entities
         public Gender ParticipantsGender { get; set; }
 
         public Guid CreatorId { get; set; }
-        public User? Creator { get; set; }
         
-        public IList<EventCategory>? EventCategories { get; set; }
+        public IList<Category>? EventCategories { get; set; }
         public IList<EventMember>? Members { get; set; }
 
         public Guid? ParentEventId { get; set; }

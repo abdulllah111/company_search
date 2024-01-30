@@ -48,7 +48,7 @@ namespace Application.Handlers.Events
             // Обновляем флаги для удаленных из события категорий 
             foreach (var removedCategory in removedCategories)
             {
-               await _categoryService.UpdateCategoryUsageStatusAsync(removedCategory.CategoryId, cancellationToken);
+               await _categoryService.UpdateCategoryUsageStatusAsync(removedCategory.Id, cancellationToken);
             }
 
             // Проверяем новые категории добавленные к событию и обновляем флаги категорий
@@ -57,7 +57,7 @@ namespace Application.Handlers.Events
                 // Устанавливаем необходимый флаг для добавленных категорий
                 foreach (var category in request.EventCategories)
                 {
-                    await _categoryService.UpdateCategoryUsageStatusAsync(category.CategoryId, cancellationToken);
+                    await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
                 }
             
             }

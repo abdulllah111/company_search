@@ -11,6 +11,6 @@ namespace Domain.Entities
         public int Age { get; set; }
         public required Gender Gender { get; set; }
         public IList<Event>? CreatedEvents { get; set; }
-        public IList<EventMember>? EventMemberships { get; set; }
+        public IList<Event>? EventMemberships { get; set; }
     }
 }
