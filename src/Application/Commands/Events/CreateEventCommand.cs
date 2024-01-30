@@ -1,4 +1,5 @@
 using Domain.Common;
+using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 
@@ -19,7 +20,7 @@ namespace Application.Commands.Events
         public int MaxAge { get; set; }
         public DateTime RegistrationDeadline { get; set; }
         public Gender ParticipantsGender { get; set; }
-        public required ICollection<Guid> CategoryIds { get; set; }
+        public IList<Category>? EventCategories { get; set; }
         public Guid? ParentEventId { get; set; }
 
         public CreateEventCommand(){

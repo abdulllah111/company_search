@@ -16,7 +16,7 @@ namespace Application.Handlers.Events
         _subscriptionService = subscriptionService;
         public async Task<Guid> Handle(SubscribeToEventCommand request, CancellationToken cancellationToken)
         {
-            await _subscriptionService.SubscribeUserAsync(request.EventId, request.UserId, cancellationToken);
+            await _subscriptionService.SubscribeUserAsync(request.EventId, request.UserId, request.UserAge, request.UserGender, cancellationToken);
             return request.EventId;
         }
     }

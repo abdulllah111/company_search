@@ -15,12 +15,12 @@ namespace Application.Common.Services
         public async Task UpdateCategoryUsageStatusAsync(Guid categoryId, CancellationToken cancellationToken)
         {
             var category = await _context.Categories
-                .Include(c => c.EventCategories)
+                .Include(c => c.CategoryEvents)
                 .FirstOrDefaultAsync(c => c.Id == categoryId, cancellationToken);
 
             if (category != null)
             {
-                bool isShared = category.EventCategories?.Any() ?? false;  // Проверяем, есть ли использование категории
+                bool isShared = category.CategoryEvents?.Any() ?? false;  // Проверяем, есть ли использование категории
 
                 if (isShared != category.IsShared)
                 {

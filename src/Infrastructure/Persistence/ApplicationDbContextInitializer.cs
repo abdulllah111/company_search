@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class ApplicationDbContextInitialiser
+    public class ApplicationDbContextInitializer
     {
         public static void Initialize(ApplicationDbContext context)
         {

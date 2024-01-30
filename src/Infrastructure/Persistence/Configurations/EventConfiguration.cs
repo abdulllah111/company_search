@@ -9,19 +9,15 @@ namespace Persistence.Configurations
         public void Configure(EntityTypeBuilder<Event> builder)
         {
             builder.HasKey(e => e.Id);
-            
-            builder.HasMany(e => e.EventCategories)
-            .WithOne(ec => ec.Event)
-            .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.Members)
-            .WithOne(em => em.Event)
-            .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(e => e.Location);
+            // builder.OwnsOne(e => e.Members);
 
             builder.HasMany(e => e.ChildEvents)
             .WithOne()
             .HasForeignKey(e => e.ParentEventId)
             .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

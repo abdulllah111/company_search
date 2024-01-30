@@ -12,10 +12,8 @@ namespace Application.Handlers.Events
     {
         private readonly IApplicationDbContext _context;
         private readonly ICategoryService _categoryService;
-        public UpdateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService){
-            _context = context;
-            _categoryService = categoryService;
-        }
+        public UpdateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService) =>
+        (_context, _categoryService) = (context, categoryService);
         public async Task<Guid> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Events
@@ -26,8 +24,8 @@ namespace Application.Handlers.Events
             if(entity == null || entity.CreatorId != request.CreatorId) throw new NotFoundException(nameof(Event), request.Id);
             
             // Получаем удаленные из события категории
-            var removedCategories = entity.CategoryIds
-            .Except(request.CategoryIds)
+            var removedCategories = entity.EventCategories!
+            .Except(request.EventCategories!)
             .ToList();
 
             entity.LastModified = DateTime.Now;
@@ -44,22 +42,22 @@ namespace Application.Handlers.Events
             entity.RegistrationDeadline = request.RegistrationDeadline;
             entity.ParticipantsGender = request.ParticipantsGender;
             entity.Created = DateTime.Now;
-            entity.CategoryIds = request.CategoryIds;
+            entity.EventCategories = request.EventCategories;
             
 
             // Обновляем флаги для удаленных из события категорий 
-            foreach (var removedCategoryId in removedCategories)
+            foreach (var removedCategory in removedCategories)
             {
-               await _categoryService.UpdateCategoryUsageStatusAsync(removedCategoryId, cancellationToken);
+               await _categoryService.UpdateCategoryUsageStatusAsync(removedCategory.Id, cancellationToken);
             }
 
             // Проверяем новые категории добавленные к событию и обновляем флаги категорий
-            if (request.CategoryIds != null && request.CategoryIds.Any())
+            if (request.EventCategories != null && request.EventCategories.Any())
             {
                 // Устанавливаем необходимый флаг для добавленных категорий
-                foreach (var categoryId in request.CategoryIds)
+                foreach (var category in request.EventCategories)
                 {
-                    await _categoryService.UpdateCategoryUsageStatusAsync(categoryId, cancellationToken);
+                    await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
                 }
             
             }

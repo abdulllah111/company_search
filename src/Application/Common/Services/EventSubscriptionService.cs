@@ -14,24 +14,19 @@ namespace Application.Common.Services
         {
             _context = context;
         }
-        
-        public async Task SubscribeUserAsync(Guid eventId, Guid userId, CancellationToken cancellationToken)
+
+        public async Task SubscribeUserAsync(Guid eventId, Guid userId, int userAge, Gender? userGender, CancellationToken cancellationToken)
         {
             // Проверка на существование подписки
             var existingSubscription = await _context.EventMembers
             .FirstOrDefaultAsync(em => em.EventId == eventId && em.UserId == userId, cancellationToken);
-            
+
             // Проверка на существование события
             var eventEntity = await _context.Events
             .FirstOrDefaultAsync(e => e.Id == eventId, cancellationToken);
 
-            // Проверка на существование пользователя
-            var memberEntity = await _context.Users
-            .FindAsync(new object[] { userId }, cancellationToken);
-
-
             // Событие и пользователь не найдены / уже зарегестрирован - ошибка
-            if (eventEntity == null && memberEntity == null && existingSubscription != null) throw new NotFoundException(nameof(Event), eventId);
+            if (eventEntity == null && existingSubscription != null) throw new NotFoundException(nameof(Event), eventId);
 
             // Событие завершено и регистрация закрыта - ошибка
             if (eventEntity!.EndDate.HasValue && eventEntity.EndDate < DateTime.Now && eventEntity.RegistrationDeadline < DateTime.Now)
@@ -45,26 +40,28 @@ namespace Application.Common.Services
                 throw new NotFoundException("Max participants");
             }
 
-            //
-            if(eventEntity.MinAge > memberEntity!.Age && eventEntity.MaxAge < memberEntity.Age)
+            // Недопустимый возраст - ошибка
+            if (eventEntity.MinAge > userAge && eventEntity.MaxAge < userAge)
             {
                 throw new NotFoundException("Inappropriate age");
             }
 
-            if(eventEntity.ParticipantsGender != Gender.Any && eventEntity.ParticipantsGender != memberEntity.Gender)
+            // Недопустимый пол - ошибка
+            if (eventEntity.ParticipantsGender != Gender.Any && eventEntity.ParticipantsGender != userGender)
             {
                 throw new NotFoundException("Inappropriate gender");
             }
 
-            if(eventEntity.CreatorId == memberEntity.Id)
+            // Подиска от создателя - ошибка
+            if (eventEntity.CreatorId == userId)
             {
                 throw new NotFoundException("You are the event creator");
             }
 
-            var newSubscription = new EventMember 
-            { 
-                Id = new Guid(),
-                EventId = eventId, 
+            var newSubscription = new EventMember
+            {
+                Id = Guid.NewGuid(),
+                EventId = eventId,
                 UserId = userId,
                 Created = DateTime.Now
             };
@@ -75,7 +72,7 @@ namespace Application.Common.Services
         public async Task UnsubscribeUserAsync(Guid eventId, Guid userId, CancellationToken cancellationToken)
         {
             var subscriptionToRemove = await _context.EventMembers
-            .FirstOrDefaultAsync(em => em.EventId == eventId && em.UserId == userId, cancellationToken);
+             .FirstOrDefaultAsync(em => em.EventId == eventId && em.UserId == userId, cancellationToken);
 
             if (subscriptionToRemove != null)
             {

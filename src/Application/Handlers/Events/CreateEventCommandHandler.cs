@@ -11,15 +11,13 @@ namespace Application.Handlers.Events
         private readonly IApplicationDbContext _context;
 
         private readonly ICategoryService _categoryService;
-        public CreateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService){
-            _context = context;
-            _categoryService = categoryService;
-        }
+        public CreateEventCommandHandler(IApplicationDbContext context, ICategoryService categoryService) =>
+        (_context, _categoryService) = (context, categoryService);
         public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var entity = new Event
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = request.Name, 
                 Description = request.Description, 
                 StartDate = request.StartDate,
@@ -33,16 +31,16 @@ namespace Application.Handlers.Events
                 RegistrationDeadline = request.RegistrationDeadline,
                 ParticipantsGender = request.ParticipantsGender,
                 CreatorId = request.CreatorId,
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
-                CategoryIds = request.CategoryIds,
+                EventCategories = request.EventCategories,
                 ParentEventId = request.ParentEventId
             };
 
             // Устанавливаем необходимый флаг для добавленных категорий
-            foreach (var categoryId in request.CategoryIds)
+            foreach (var category in request.EventCategories!)
             {
-                await _categoryService.UpdateCategoryUsageStatusAsync(categoryId, cancellationToken);
+                await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
             }
 
             await _context.Events.AddAsync(entity, cancellationToken);

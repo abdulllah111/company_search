@@ -10,8 +10,7 @@ namespace Domain.Entities
         public required string Email { get; set; }   
         public int Age { get; set; }
         public required Gender Gender { get; set; }
-        public ICollection<Event>? CreatedEvents { get; set; }
-        
-        public ICollection<EventMember>? EventMemberships { get; set; }
+        public IList<Event>? CreatedEvents { get; set; }
+        public IList<Event>? EventMemberships { get; set; }
     }
 }
