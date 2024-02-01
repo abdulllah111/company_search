@@ -57,9 +57,13 @@ void RegisterServices(IServiceCollection services)
         config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
     .AddJwtBearer(options => {
-        options.Authority = "https://localhost:44352/";
+        options.Authority = "https://localhost:7206/";
         options.Audience = "CompanySearchWebAPI";
         options.RequireHttpsMetadata = false;
+        options.BackchannelHttpHandler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
     });
 
     services.AddSwaggerGen(config =>{

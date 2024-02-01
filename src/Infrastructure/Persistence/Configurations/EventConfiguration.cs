@@ -13,11 +13,11 @@ namespace Persistence.Configurations
             builder.OwnsOne(e => e.Location);
             // builder.OwnsOne(e => e.Members);
 
-            builder.HasMany(e => e.ChildEvents)
-            .WithOne()
-            .HasForeignKey(e => e.ParentEventId)
-            .OnDelete(DeleteBehavior.Cascade);
+         
 
+            builder.HasOne(e => e.ParentEvent)
+            .WithMany(e => e.ChildEvents)
+            .HasForeignKey(e => e.ParentEventId);
         }
     }
 }
