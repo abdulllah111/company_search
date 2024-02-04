@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
                 UserId = UserId
             };
             var vm = await Mediator!.Send(query);
-
+            var age = Age;
             return Ok(vm);
         }
 

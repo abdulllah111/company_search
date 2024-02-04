@@ -30,7 +30,8 @@ namespace Application.Handlers.Categories
                 CreatorId = request.CreatorId,
                 Created = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
-                ParentCategoryId = request.ParentCategoryId
+                ParentCategoryId = request.ParentCategoryId,
+                IsShared = true
             };
 
             await _context.Categories.AddAsync(entity, cancellationToken);

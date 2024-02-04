@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Mappings;
+using Application.Queries.Categories.GetCategories;
 using AutoMapper;
 using Domain.Entities;
 
@@ -16,7 +17,7 @@ namespace Application.Queries.Events.GetEvents
         public int MaxParticipants { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime RegistrationDeadline { get; set; }
-        public IList<Category>? EventCategories { get; set; }
+        public IList<CategoryDto>? EventCategories { get; set; }
         public int MembersCount { get; set; }
         
         public void Mapping(Profile profile)
