@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Commands.Events;
 using Application.Common.Mappings;
+using Application.Queries.Categories.GetCategories;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
@@ -25,7 +26,7 @@ namespace WebAPI.Models
         public int MaxAge { get; set; }
         public DateTime RegistrationDeadline { get; set; }
         public Gender ParticipantsGender { get; set; }
-        public IList<Category>? EventCategories { get; set; }
+        public IList<CategoryDto>? EventCategories { get; set; }
 
         public void Mapping(Profile profile)
         {

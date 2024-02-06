@@ -22,10 +22,10 @@ namespace Application.Handlers.Events
         public async Task<EventsVm> Handle(GetEventsQuery request, CancellationToken cancellationToken)
         {
             var events = await _context.Events
-                .Where(eventEntity => 
-                eventEntity.EndDate >= DateTime.UtcNow && 
-                eventEntity.MaxParticipants >= eventEntity.Members!.Count && 
-                eventEntity.RegistrationDeadline >= DateTime.UtcNow)
+                // .Where(eventEntity => 
+                // eventEntity.EndDate >= DateTime.UtcNow && 
+                // eventEntity.MaxParticipants >= eventEntity.Members!.Count && 
+                // eventEntity.RegistrationDeadline >= DateTime.UtcNow)
                 .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken) ;
 

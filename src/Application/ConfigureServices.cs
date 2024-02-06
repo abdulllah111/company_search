@@ -20,7 +20,8 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssemblies(new[] {Assembly.GetExecutingAssembly()});
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped<ICategoryService>(provider => provider.GetService<CategoryService>()!);
+            // services.AddScoped<ICategoryService>(provider => provider.GetService<CategoryService>()!);
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventSubscriptionService>(provider => provider.GetService<EventSubscriptionService>()!);
             return services;
         }

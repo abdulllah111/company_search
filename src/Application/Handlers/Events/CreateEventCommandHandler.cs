@@ -1,3 +1,4 @@
+using System.Linq;
 using Application.Commands.Events;
 using Application.Common.Interfaces;
 using Domain.Entities;
@@ -20,28 +21,28 @@ namespace Application.Handlers.Events
                 Id = Guid.NewGuid(),
                 Name = request.Name, 
                 Description = request.Description, 
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
+                StartDate = request.StartDate.ToUniversalTime(),
+                EndDate = request.EndDate!.Value.ToUniversalTime(),
                 Location = request.Location, 
                 EventType = request.EventType,
                 MinParticipants = request.MinParticipants,
                 MaxParticipants = request.MaxParticipants,
                 MinAge = request.MinAge,
                 MaxAge = request.MaxAge,
-                RegistrationDeadline = request.RegistrationDeadline,
+                RegistrationDeadline = request.RegistrationDeadline.ToUniversalTime(),
                 ParticipantsGender = request.ParticipantsGender,
                 CreatorId = request.CreatorId,
                 Created = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
-                EventCategories = request.EventCategories,
+                EventCategories = _context.Categories.Where(x => request.EventCategories!.Contains(x)).ToList(),
                 ParentEventId = request.ParentEventId
             };
 
             // Устанавливаем необходимый флаг для добавленных категорий
-            foreach (var category in request.EventCategories!)
-            {
-                await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
-            }
+            // foreach (var category in request.EventCategories!)
+            // {
+            //     await _categoryService.UpdateCategoryUsageStatusAsync(category.Id, cancellationToken);
+            // }
 
             await _context.Events.AddAsync(entity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
